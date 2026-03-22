@@ -1,8 +1,6 @@
 {
   "buildCommand": "cd ironguard-ai/frontend && npm install && npm run build",
   "outputDirectory": "ironguard-ai/frontend/dist",
-  "installCommand": "cd ironguard-ai/frontend && npm install",
-  "framework": "vite",
   "rewrites": [
     {
       "source": "/(.*)",
