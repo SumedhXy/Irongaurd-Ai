@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #0f1425;
+  --bg-card: #111827;
+  --bg-card-hover: #151d30;
+  --border-color: #1e293b;
+  --border-glow: #00ff4133;
+  --accent: #00ff41;
+  --accent-dim: #00cc33;
+  --accent-glow: rgba(0, 255, 65, 0.15);
+  --accent-glow-strong: rgba(0, 255, 65, 0.3);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --danger: #ff3b5c;
+  --danger-dim: #cc2f4a;
+  --danger-glow: rgba(255, 59, 92, 0.15);
+  --warning: #ffb020;
+  --warning-glow: rgba(255, 176, 32, 0.15);
+  --info: #38bdf8;
+  --info-glow: rgba(56, 189, 248, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ───────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+/* ─── Geometric background pattern ────────────── */
+.geo-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.geo-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(ellipse 600px 600px at 20% 20%, rgba(0, 255, 65, 0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 80% 80%, rgba(56, 189, 248, 0.02) 0%, transparent 70%);
+}
+.geo-shape {
+  position: absolute;
+  border: 1px solid rgba(0, 255, 65, 0.06);
+  animation: float-shape 20s ease-in-out infinite;
+}
+.geo-shape.tri-1 {
+  top: 10%;
+  right: 8%;
+  width: 120px;
+  height: 120px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background: linear-gradient(135deg, rgba(0,255,65,0.04), transparent);
+  animation-duration: 25s;
+}
+.geo-shape.tri-2 {
+  bottom: 15%;
+  left: 5%;
+  width: 80px;
+  height: 80px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background: linear-gradient(135deg, rgba(56,189,248,0.03), transparent);
+  animation-duration: 18s;
+  animation-delay: -5s;
+}
+.geo-shape.hex-1 {
+  top: 40%;
+  left: 3%;
+  width: 60px;
+  height: 60px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background: rgba(0,255,65,0.03);
+  animation-duration: 22s;
+  animation-delay: -8s;
+}
+.geo-shape.circle-1 {
+  top: 25%;
+  right: 15%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 65, 0.04);
+  animation-duration: 30s;
+}
+.geo-shape.line-1 {
+  top: 60%;
+  right: 10%;
+  width: 300px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,255,65,0.08), transparent);
+  transform: rotate(-30deg);
+  animation: none;
+}
+
+@keyframes float-shape {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  25% { transform: translateY(-15px) rotate(3deg); opacity: 1; }
+  50% { transform: translateY(-25px) rotate(-2deg); opacity: 0.8; }
+  75% { transform: translateY(-10px) rotate(1deg); opacity: 1; }
+}
+
+/* ─── Glow effects ────────────────────────────── */
+.glow-green {
+  box-shadow: 0 0 15px var(--accent-glow), 0 0 40px rgba(0,255,65,0.05);
+}
+.glow-green-strong {
+  box-shadow: 0 0 20px var(--accent-glow-strong), 0 0 60px rgba(0,255,65,0.1);
+}
+.glow-text-green {
+  text-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0,255,65,0.1);
+}
+
+/* ─── Scan line effect ────────────────────────── */
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: scan 4s linear infinite;
+  opacity: 0.3;
+}
+@keyframes scan {
+  0% { top: -5%; }
+  100% { top: 105%; }
+}
+
+/* ─── Pulse ring ──────────────────────────────── */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.1); opacity: 0.15; }
+  100% { transform: scale(1); opacity: 0.4; }
+}
+
+/* ─── Grid dot pattern ────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(0,255,65,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Mono font for data ──────────────────────── */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ─── Button styles ───────────────────────────── */
+.btn-primary {
+  position: relative;
+  background: var(--accent);
+  color: #0a0e1a;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 25px var(--accent-glow-strong), 0 4px 20px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+.btn-primary:hover::before { opacity: 1; }
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* ─── Card styles ─────────────────────────────── */
+.card-dark {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  transition: all 0.35s ease;
+}
+.card-dark:hover {
+  border-color: rgba(0, 255, 65, 0.15);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 20px var(--accent-glow), 0 8px 30px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+/* ─── Status badge animations ─────────────────── */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: blink-dot 2s ease-in-out infinite;
+}
+@keyframes blink-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ─── Number counter animation ────────────────── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-count { animation: count-up 0.6s ease-out forwards; }
+
+/* ─── Typing cursor ──────────────────────────── */
+.cursor-blink::after {
+  content: '█';
+  animation: cursor 1s step-end infinite;
+  color: var(--accent);
+  font-size: 0.85em;
+}
+@keyframes cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── Table styles ────────────────────────────── */
+.table-cyber {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-cyber thead th {
+  background: rgba(0,255,65,0.04);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+}
+.table-cyber tbody tr {
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  transition: background 0.2s;
+}
+.table-cyber tbody tr:hover {
+  background: rgba(0,255,65,0.03);
+}
+.table-cyber tbody td {
+  padding: 14px 18px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ─── Fade / slide animations ─────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim-fade-up {
+  animation: fade-up 0.7s ease-out forwards;
+}
+.anim-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.anim-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.anim-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.anim-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* ─── Corner accent on cards ──────────────────── */
+.corner-accent {
+  position: relative;
+}
+.corner-accent::before,
+.corner-accent::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.corner-accent::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.corner-accent::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+.corner-accent:hover::before,
+.corner-accent:hover::after {
+  opacity: 0.8;
+}
